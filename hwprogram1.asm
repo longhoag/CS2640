@@ -1,5 +1,7 @@
 #Long Hoang (Individual)
 
+#github project link: https://github.com/longhoag/CS2640/blob/main/hwprogram1.asm
+
 # CS 2640.04
 #Assingment prompt: The prompt was posted on canvas. I'm doing the program 1: Getting Familiar with Assembly
 # October 27, 2023
