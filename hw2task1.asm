@@ -1,3 +1,12 @@
+#Long Hoang (Individual)
+
+#github project link: https://github.com/longhoag/CS2640/blob/main/hwprogram1.asm
+
+# CS 2640.04
+#Assingment prompt: The prompt was posted on canvas. I'm doing the program 2: Practice with Conditionals and Loops
+# November 8, 2023
+
+
 #print string macro
 .macro printString(%strings)
 	.data 
@@ -60,25 +69,33 @@ getGrade:
 	# if the input score < 0, re prompt, not exit and display error
 	blt $t1, 0, getGrade
 	
-	#if input score > 100, re prompt
-	bgt $t1, 100, getGrade
+	#if input score > 100, A with extra credit (as listed in requirement of the prompt)
+	bgt $t1, 100, extraGrade
 	
 	
 	#Option F: 0 - 59
 	ble $t1, 59, Fgrade
 	
+	#Option D: 60 - 69
 	ble $t1, 69, Dgrade
 	
+	#Option C: 70 - 79
 	ble $t1, 79, Cgrade
 	
+	#Option B: 80 - 89
 	ble $t1, 89, Bgrade
 	
+	#Option A: 90 - 100
 	ble $t1, 100, Agrade
 	
 
 # i dont need the lower bound because it will go from bottom to the top, sequentially
 Fgrade:
 	printString("\nThe grade is: F")
+	gradingPrint
+	
+extraGrade:
+	printString("\nThe grade is: A + extra credits")
 	gradingPrint
 	
 Dgrade:
