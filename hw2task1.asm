@@ -4,6 +4,7 @@
 
 # CS 2640.04
 #Assingment prompt: The prompt was posted on canvas. I'm doing the program 2: Practice with Conditionals and Loops
+#Task 1: Return a Letter Grade from User Input
 # November 8, 2023
 
 
