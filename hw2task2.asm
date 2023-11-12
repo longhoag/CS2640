@@ -1,6 +1,6 @@
 #Long Hoang (Individual)
 
-#github project link: https://github.com/longhoag/CS2640/blob/main/hw2task1.asm
+#github project link: https://github.com/longhoag/CS2640/blob/main/hw2task2.asm
 
 # CS 2640.04
 #Assingment prompt: The prompt was posted on canvas. I'm doing the program 2: Practice with Conditionals and Loops
