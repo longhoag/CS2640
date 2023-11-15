@@ -1,3 +1,13 @@
+.macro twoparams(%int, %int)
+li $t1, 2 
+mul $t0, $t1, %int #t0 = t1 * %int
+
+#print
+li $v0, 1
+move $a0, $t0
+syscall
+
+.end_macro
 
 .data 
 prompt: .asciiz "Give me a string "
@@ -24,3 +34,4 @@ syscall
 #exit
 #li $v0, 10
 #syscall
+
