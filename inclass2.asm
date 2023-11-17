@@ -51,7 +51,7 @@ main:
 
 loop:
 	beq $t2, 3, exit
-	aString(2, "hello\n")
+	aString(2, "Spider-man: Across the spider verse\n")
 	addi $t2, $t2, 1
 	
 	j loop
