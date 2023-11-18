@@ -30,6 +30,17 @@
 .end_macro 
 
 
+.macro printChar
+ 	li $v0,11 			
+ 	syscall
+ 	
+ 	#point to the next char
+ 	add $t1, $t1,1 	
+ 	
+ 	#increment length		
+ 	add $t2, $t2,1 
+.end_macro 
+
 .data
 
 buffer: .space 20
@@ -44,6 +55,11 @@ main:
 #t2: string length
 #t3: key value
 #t4 : letter to decode, encode
+#t5: balance value 
+#t6: in decrypt process
+
+
+#t8: classify value
 
 #cua ng ta - cua minh
 #t2 - t0
@@ -51,10 +67,11 @@ main:
 #t1 - t2 
 #t3 - t3
 #t4 - t4
+#t5 - t5
 
 init:
 	#Encryption or Decryption 
-	printString("Choose your service\nEncrypt(E) or Decrypt(D) ?")
+	printString("Choose your service\nEncrypt(E) or Decrypt(D): ")
 	
 	#read the user input
 	la $a0, buffer
@@ -77,31 +94,126 @@ EncryptProcess:
 	
 	getTextToProcess
 	
-	j encrypt
+	j loadingChar
 
-encrypt:
+loadingChar:
 	#load each charater
 	lb $t4, 0($t1)
 	beq $t4, 10, exit #exit if reaches the end (\n)
 	beqz $t4, exit #exit if reaches the end
 	
-	j EisLower 
+	j checkLower 
 	
-#Encryption 
-EisLower:
-	#if the character is not lower case or upper case
+DecryptProcess:
+	printString("\nEnter Text to decode: ")
+	
+	getTextToProcess
+	
+	j loadingChar
+	
+#Classify section
+checkLower:
+	#if the character is not lower case nor upper case
 	bgt $t4, 122, notLowerUpper 
 	#if the character is not lower case 
  	blt $t4, 97, notLower 
  	
- 	li $v0, 1  #store value 1 in register v0 if lower case
+ 	li $t8, 1  #store value 1 in register t8 if lower case
  	
- 	jr $ra #jump to return address
+ 	#jr $ra #jump to return address
+ 	j classify
  
 notLowerUpper:
-	li $v0, 2 #store value 2 in register v0 if not lower nor upper case
+	li $t8, 2 #store value 2 in register t8 if not lower nor upper case
 	
+	j classify
 	
+notLower:
+	#if the character is not lower nor upper case
+	blt $t4, 65, notLowerUpper
+	#if the character is not lower nor upper case
+ 	bgt $t4, 91, notLowerUpper 
+ 	
+ 	#store value 0 in register t8 if the character is upper case	
+ 	li $t8, 0		
+ 	
+ 	j classify
+ 	
+classify:
+	beq $t8, 1, isLower #--> classify lowercase
+	beq $t8, 0, isUpper #--> classify uppercase
+	move $a0, $t4 #if not upper nor lower
+	j printEncrypt
+
+isLower:
+	# for E
+	beq $t0, 69, encryptLower
+	#for D
+	beq $t0, 68, decryptLower
+
+isUpper:
+
+	# for option E
+	beq $t0, 69, encryptUpper
+	#for option D
+	beq $t0, 68, decryptUpper
+
+
+#Encryption process
+encryptLower:
+	#encrypt lower case: ch = (ch - 'a' + key) % 26 + 'a';
+	li $t5, 26   				
+	sub $t4, $t4, 97
+ 	add $t4, $t4, $t3
+ 	div $t4, $t5
+ 	mfhi $a0
+ 	addi $a0, $a0, 97
+ 	j printEncrypt
+ 
+encryptUpper:
+#encrypt upper case: ch = (ch - 'A' + key) % 26 + 'A';
+ 	li $t5, 26   				
+ 	sub $t4, $t4, 65
+ 	add $t4, $t4, $t3
+ 	div $t4, $t5
+ 	mfhi $a0
+ 	addi $a0, $a0, 65
+ 	j printEncrypt
+ 	
+ 	
+printEncrypt:
+	printChar
+ 	j loadingChar
+
+#Decryption process:
+decryptLower:
+	#decrypt lower case: ch = (ch - 'a' - key + 26) % 26 + 'a';
+	li $t5, 26   				
+ 	sub $t4, $t4, 97 #ch - 'a'
+ 	sub $t4, $t4, $t3 # - key
+ 	add $t4, $t4, $t5 # + 26
+ 	div $t4, $t5 # % 26
+ 	mfhi $a0
+ 	addi $a0, $a0, 97 # + 'a'
+ 	
+ 	j printDecrypt
+ 	
+decryptUpper:
+	#decrypt upper case: ch = (ch - 'A' - key + 26) % 26 + 'A';
+	li $t5, 26   				
+ 	sub $t4, $t4, 65 #ch - 'A'
+ 	sub $t4, $t4, $t3 # - key
+ 	add $t4, $t4, $t5 # + 26
+ 	div $t4, $t5 # % 26
+ 	mfhi $a0
+ 	addi $a0, $a0, 65 # + 'A'
+
+ 	j printDecrypt
+ 	
+printDecrypt:
+	printChar
+ 	j loadingChar
+
 exit:
 	li $v0, 10
 	syscall
