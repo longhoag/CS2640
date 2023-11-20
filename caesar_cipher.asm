@@ -57,8 +57,17 @@ main:
 #t4 : letter to decode, encode
 #t5: balance value 
 #t6: in decrypt process
+
+
 #t8: classify value
 
+#cua ng ta - cua minh
+#t2 - t0
+#t0 - t1
+#t1 - t2 
+#t3 - t3
+#t4 - t4
+#t5 - t5
 
 init:
 	#Encryption or Decryption 
@@ -134,7 +143,7 @@ classify:
 	beq $t8, 1, isLower #--> classify lowercase
 	beq $t8, 0, isUpper #--> classify uppercase
 	move $a0, $t4 #if not upper nor lower
-	j printEncrypt
+	j printCrypt
 
 isLower:
 	# for E
@@ -159,7 +168,7 @@ encryptLower:
  	div $t4, $t5
  	mfhi $a0
  	addi $a0, $a0, 97
- 	j printEncrypt
+ 	j printCrypt
  
 encryptUpper:
 #encrypt upper case: ch = (ch - 'A' + key) % 26 + 'A';
@@ -169,12 +178,8 @@ encryptUpper:
  	div $t4, $t5
  	mfhi $a0
  	addi $a0, $a0, 65
- 	j printEncrypt
+ 	j printCrypt
  	
- 	
-printEncrypt:
-	printChar
- 	j loadingChar
 
 #Decryption process:
 decryptLower:
@@ -187,7 +192,7 @@ decryptLower:
  	mfhi $a0
  	addi $a0, $a0, 97 # + 'a'
  	
- 	j printDecrypt
+ 	j printCrypt
  	
 decryptUpper:
 	#decrypt upper case: ch = (ch - 'A' - key + 26) % 26 + 'A';
@@ -199,31 +204,14 @@ decryptUpper:
  	mfhi $a0
  	addi $a0, $a0, 65 # + 'A'
 
- 	j printDecrypt
- 	
-printDecrypt:
+ 	j printCrypt
+
+
+printCrypt:
 	printChar
  	j loadingChar
 
 exit:
 	li $v0, 10
 	syscall
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
