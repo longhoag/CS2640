@@ -1,5 +1,11 @@
-.data
+#Long Hoang
 
+#github project link: https://github.com/longhoag/CS2640/blob/main/fileHandle.asm
+
+# CS 2640.04
+# File Handling in MIPS - Read Existing, Write New
+
+.data
 inputFileName: .asciiz "gradedItems.txt"
 outputFileName: .asciiz "outputFile.txt"
 buffer: .space 175
@@ -51,4 +57,9 @@ syscall
 li $v0, 16
 move $a0, $s1
 syscall
+
+# exit
+li $v0, 10
+syscall
+
 
