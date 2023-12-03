@@ -48,7 +48,7 @@ la $a1, buffer
 la $a2, 174
 syscall
 
-# exit
+# close input file
 li $v0, 16
 move $a0, $s0
 syscall
