@@ -1,3 +1,11 @@
+#Long Hoang (Individual)
+
+#github project link: https://github.com/longhoag/CS2640/blob/main/hw3task2.asm
+
+# CS 2640.04
+#Assingment prompt: The prompt was posted on canvas. I'm doing the Program 3: Accessing Memory and File Handling
+#Task 2: Printing Files
+# December 3, 2023
 
 .data
 inputFileName: .asciiz "practiceFile.txt"

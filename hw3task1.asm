@@ -1,3 +1,12 @@
+#Long Hoang (Individual)
+
+#github project link: https://github.com/longhoag/CS2640/blob/main/hw3task1.asm
+
+# CS 2640.04
+#Assingment prompt: The prompt was posted on canvas. I'm doing the Program 3: Accessing Memory and File Handling
+#Task 1: Return a Letter Grade from Scores in Memory
+# December 3, 2023
+
 #print string macro
 .macro printString(%strings)
 	.data 
