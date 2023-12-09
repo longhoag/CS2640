@@ -31,6 +31,16 @@
 	printString("\nOutput message is: ")
 .end_macro 
 
+# to handle the negetive value key and maintain the result for normal cases 
+.macro keyFailSafe 
+	# store the remainder in $t7
+	move $t7, $a0
+ 	add $t7, $t7, $t5 # + 26 #handle the negative key case
+ 	div $t7, $t5 # %26 : take mod 1 more time to make the result falls within the alphabet character range
+ 	mfhi $a0
+.end_macro
+
+
 
 .macro printChar
  	li $v0,11 			
@@ -60,6 +70,7 @@ main:
 #t5: balance value 
 #t6: in decrypt process
 #t8: classify value
+#t7 : result of mod (to fix negetive value key)
 
 
 init:
@@ -160,6 +171,9 @@ encryptLower:
  	add $t4, $t4, $t3 # + key
  	div $t4, $t5 # %26
  	mfhi $a0
+ 	
+ 	keyFailSafe
+ 	
  	addi $a0, $a0, 97 # + 'a'
  	j printCrypt
  
@@ -170,6 +184,9 @@ encryptUpper:
  	add $t4, $t4, $t3
  	div $t4, $t5
  	mfhi $a0
+ 	
+ 	keyFailSafe
+ 	
  	addi $a0, $a0, 65
  	j printCrypt
  	
@@ -183,6 +200,9 @@ decryptLower:
  	add $t4, $t4, $t5 # + 26
  	div $t4, $t5 # % 26
  	mfhi $a0
+ 	
+ 	keyFailSafe
+ 	
  	addi $a0, $a0, 97 # + 'a'
  	
  	j printCrypt
@@ -195,6 +215,9 @@ decryptUpper:
  	add $t4, $t4, $t5 # + 26
  	div $t4, $t5 # % 26
  	mfhi $a0
+ 	
+ 	keyFailSafe
+ 	
  	addi $a0, $a0, 65 # + 'A'
 
  	j printCrypt
