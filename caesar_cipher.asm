@@ -31,15 +31,6 @@
 	printString("\nOutput message is: ")
 .end_macro 
 
-# to handle the negetive value key and maintain the result for normal cases 
-.macro keyFailSafe 
-	# store the remainder in $t7
-	move $t7, $a0
- 	add $t7, $t7, $t5 # + 26 #handle the negative key case
- 	div $t7, $t5 # %26 : take mod 1 more time to make the result falls within the alphabet character range
- 	mfhi $a0
-.end_macro
-
 
 
 .macro printChar
@@ -67,7 +58,7 @@ main:
 #t2: string length
 #t3: key value
 #t4 : letter to decode, encode
-#t5: balance value 
+#t5: balance value ~ 26
 #t6: in decrypt process
 #t8: classify value
 #t7 : result of mod (to fix negetive value key)
@@ -165,15 +156,15 @@ isUpper:
 
 #Encryption process
 encryptLower:
-	#encrypt lower case: ch = (ch - 'a' + key) % 26 + 'a';
+	#encrypt lower case: (reference formula) ch = (ch - 'a' + key) % 26 + 'a';
+	
+	#encrypt lower case: (offical use to handle the negative value key) ch = (ch - 'a' + key + 26) % 26 + 'a';
 	li $t5, 26   				
 	sub $t4, $t4, 97 #ch - 'a'
  	add $t4, $t4, $t3 # + key
+ 	add $t4, $t4, $t5 # + 26
  	div $t4, $t5 # %26
  	mfhi $a0
- 	
- 	keyFailSafe
- 	# after the fail safe, general formula becomes --> ch = {[(ch - 'a' + key) % 26] + 26} % 26 + 'a';
  	
  	addi $a0, $a0, 97 # + 'a'
  	j printCrypt
@@ -181,15 +172,12 @@ encryptLower:
 encryptUpper:
 #encrypt upper case: ch = (ch - 'A' + key) % 26 + 'A';
  	li $t5, 26   				
- 	sub $t4, $t4, 65
- 	add $t4, $t4, $t3
- 	div $t4, $t5
+ 	sub $t4, $t4, 65 # ch - 'A'
+ 	add $t4, $t4, $t3 # + key
+ 	add $t4, $t4, $t5 # + 26
+ 	div $t4, $t5 # %26
  	mfhi $a0
- 	
- 	keyFailSafe
- 	# after the fail safe, general formula becomes --> ch = {[(ch - 'A' + key) % 26] + 26} % 26 + 'A';
- 	
- 	addi $a0, $a0, 65
+ 	addi $a0, $a0, 65 # + 'A'
  	j printCrypt
  	
 
@@ -202,8 +190,6 @@ decryptLower:
  	add $t4, $t4, $t5 # + 26
  	div $t4, $t5 # % 26
  	mfhi $a0
- 	
- 	#we don't need failsafe for decryption, because in the formula itself +26 already handled the case
 
  	addi $a0, $a0, 97 # + 'a'
  	
@@ -217,8 +203,6 @@ decryptUpper:
  	add $t4, $t4, $t5 # + 26
  	div $t4, $t5 # % 26
  	mfhi $a0
- 	
-	#we don't need failsafe for decryption, because in the formula itself +26 already handled the case
  	
  	addi $a0, $a0, 65 # + 'A'
 
