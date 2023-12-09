@@ -27,6 +27,8 @@
 	syscall
 	#store key value
 	move $t3, $v0
+	
+	printString("\nOutput message is: ")
 .end_macro 
 
 
@@ -163,11 +165,11 @@ isUpper:
 encryptLower:
 	#encrypt lower case: ch = (ch - 'a' + key) % 26 + 'a';
 	li $t5, 26   				
-	sub $t4, $t4, 97
- 	add $t4, $t4, $t3
- 	div $t4, $t5
+	sub $t4, $t4, 97 #ch - 'a'
+ 	add $t4, $t4, $t3 # + key
+ 	div $t4, $t5 # %26
  	mfhi $a0
- 	addi $a0, $a0, 97
+ 	addi $a0, $a0, 97 # + 'a'
  	j printCrypt
  
 encryptUpper:
@@ -212,6 +214,7 @@ printCrypt:
  	j loadingChar
 
 exit:
+	printString("\n")
 	li $v0, 10
 	syscall
 	
