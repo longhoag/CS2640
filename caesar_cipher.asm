@@ -59,17 +59,8 @@ main:
 #t4 : letter to decode, encode
 #t5: balance value 
 #t6: in decrypt process
-
-
 #t8: classify value
 
-#cua ng ta - cua minh
-#t2 - t0
-#t0 - t1
-#t1 - t2 
-#t3 - t3
-#t4 - t4
-#t5 - t5
 
 init:
 	#Encryption or Decryption 
