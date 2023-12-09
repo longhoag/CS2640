@@ -173,6 +173,7 @@ encryptLower:
  	mfhi $a0
  	
  	keyFailSafe
+ 	# after the fail safe, general formula becomes --> ch = {[(ch - 'a' + key) % 26] + 26} % 26 + 'a';
  	
  	addi $a0, $a0, 97 # + 'a'
  	j printCrypt
@@ -186,6 +187,7 @@ encryptUpper:
  	mfhi $a0
  	
  	keyFailSafe
+ 	# after the fail safe, general formula becomes --> ch = {[(ch - 'A' + key) % 26] + 26} % 26 + 'A';
  	
  	addi $a0, $a0, 65
  	j printCrypt
@@ -201,8 +203,8 @@ decryptLower:
  	div $t4, $t5 # % 26
  	mfhi $a0
  	
- 	keyFailSafe
- 	
+ 	#we don't need failsafe for decryption, because in the formula itself +26 already handled the case
+
  	addi $a0, $a0, 97 # + 'a'
  	
  	j printCrypt
@@ -216,7 +218,7 @@ decryptUpper:
  	div $t4, $t5 # % 26
  	mfhi $a0
  	
- 	keyFailSafe
+	#we don't need failsafe for decryption, because in the formula itself +26 already handled the case
  	
  	addi $a0, $a0, 65 # + 'A'
 
