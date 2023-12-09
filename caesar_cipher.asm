@@ -170,7 +170,9 @@ encryptLower:
  	j printCrypt
  
 encryptUpper:
-#encrypt upper case: ch = (ch - 'A' + key) % 26 + 'A';
+	#encrypt upper case: ch = (ch - 'A' + key) % 26 + 'A';
+	
+	#encrypt lower case: (offical use to handle the negative value key) ch = (ch - 'A' + key + 26) % 26 + 'A';
  	li $t5, 26   				
  	sub $t4, $t4, 65 # ch - 'A'
  	add $t4, $t4, $t3 # + key
