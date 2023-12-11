@@ -113,7 +113,6 @@ checkLower:
  	
  	li $t8, 1  #store value 1 in register t8 if lower case
  	
- 	#jr $ra #jump to return address
  	j classify
  
 notLowerUpper:
