@@ -1,4 +1,13 @@
-#Caesar cipher
+#MIPS Assembly Final Project 
+#Caesar Cipher
+#Group: Bill Cipher 
+# Member: Long Hoang, Alvaro Miranda, Connor McCarry
+# CS 2640.04
+
+#github project link: https://github.com/longhoag/CS2640/blob/main/caesar_cipher.asm
+
+# December 3, 2023
+
 
 #print string macro
 .macro printString(%strings)
