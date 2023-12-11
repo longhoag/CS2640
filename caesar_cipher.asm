@@ -196,7 +196,7 @@ decryptUpper:
  	sub $t4, $t4, 65 #ch - 'A'
  	sub $t4, $t4, $t3 # - key
  	add $t4, $t4, $t5 # + 26
- 	div $t4, $t5 # % 26ccccccccccccccccccccccccs
+ 	div $t4, $t5 # % 26
  	mfhi $a0
  	
  	addi $a0, $a0, 65 # + 'A'
