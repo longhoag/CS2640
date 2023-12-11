@@ -59,9 +59,7 @@ main:
 #t3: key value
 #t4 : letter to decode, encode
 #t5: balance value ~ 26
-#t6: in decrypt process
 #t8: classify value
-#t7 : result of mod (to fix negetive value key)
 
 
 init:
@@ -156,9 +154,7 @@ isUpper:
 
 #Encryption process
 encryptLower:
-	#encrypt lower case: (reference formula) ch = (ch - 'a' + key) % 26 + 'a';
-	
-	#encrypt lower case: (offical use to handle the negative value key) ch = (ch - 'a' + key + 26) % 26 + 'a';
+	#encrypt lower case: ch = (ch - 'a' + key + 26) % 26 + 'a';
 	li $t5, 26   				
 	sub $t4, $t4, 97 #ch - 'a'
  	add $t4, $t4, $t3 # + key
@@ -170,9 +166,7 @@ encryptLower:
  	j printCrypt
  
 encryptUpper:
-	#encrypt upper case: ch = (ch - 'A' + key) % 26 + 'A';
-	
-	#encrypt lower case: (offical use to handle the negative value key) ch = (ch - 'A' + key + 26) % 26 + 'A';
+	#encrypt lower case: ch = (ch - 'A' + key + 26) % 26 + 'A';
  	li $t5, 26   				
  	sub $t4, $t4, 65 # ch - 'A'
  	add $t4, $t4, $t3 # + key
@@ -203,7 +197,7 @@ decryptUpper:
  	sub $t4, $t4, 65 #ch - 'A'
  	sub $t4, $t4, $t3 # - key
  	add $t4, $t4, $t5 # + 26
- 	div $t4, $t5 # % 26
+ 	div $t4, $t5 # % 26ccccccccccccccccccccccccs
  	mfhi $a0
  	
  	addi $a0, $a0, 65 # + 'A'
